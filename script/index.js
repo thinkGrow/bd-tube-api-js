@@ -21,8 +21,13 @@ const loadCategoryVideos = (id) => {
 
   fetch(url)
     .then((response) => response.json())
-    .then((data) => displayVideos(data.category));
-
+    .then((data) => {
+      displayVideos(data.category);
+      const clickedButton = document.getElementById(`btn-${id}`);
+      clickedButton.classList.add("active");
+      console.log(clickedButton);
+      // console.log(document.getElementById{id})
+    });
   // ;
 };
 
@@ -35,8 +40,7 @@ function displayCategories(categories) {
     const categoryDiv = document.createElement("div");
     // console.log(cat.category_id);
     categoryDiv.innerHTML = `
-        <button onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
-    
+        <button id="btn-${cat.category_id}" onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
     `;
 
     categoryContainer.appendChild(categoryDiv);
