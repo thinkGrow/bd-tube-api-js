@@ -12,8 +12,6 @@ function displayCategories(categories) {
   const categoryContainer = document.getElementById("category-container");
   //Loop operation on Array of object
   for (let cat of categories) {
-    console.log(cat);
-
     //create element
     const categoryDiv = document.createElement("div");
     categoryDiv.innerHTML = `
@@ -27,4 +25,25 @@ function displayCategories(categories) {
   //append element
 }
 
+function loadVideos() {
+  fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+    .then((response) => response.json())
+    .then((data) => displayVideos(data.videos));
+  // .then(data) => displayVideos(data.)
+}
+
+const displayVideos = (videos) => {
+  const videoContainer = document.getElementById("video-container");
+  videos.forEach((video) => {
+    // console.log(video);
+    const videoDiv = document.createElement("div");
+    videoDiv.innerHTML = `
+        <h1> ${video.title} </h1> 
+        `;
+
+    videoContainer.append(videoDiv);
+  });
+};
+
+loadVideos();
 loadCategories();
