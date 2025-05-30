@@ -47,6 +47,38 @@ const loadCategoryVideos = (id) => {
   // ;
 };
 
+function loadVideoDetails(video_id) {
+  const url = `https://openapi.programming-hero.com/api/phero-tube/video/${video_id}`;
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      displayVideoDetails(data.video);
+    });
+}
+
+const displayVideoDetails = (video) => {
+  document.getElementById("video_details").showModal();
+
+  const detailsContainer = document.getElementById("details-container");
+
+  detailsContainer.innerHTML = `
+  
+          <div class="modal-box flex flex-col gap-4">
+            <h3 class="text-2xl font-bold">${video.title}</h3>
+            <img class="rounded-lg" src="${video.thumbnail}" alt="">
+            <p>${video.description}</p>      
+            <div class="modal-action">
+                <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn hover:bg-[#FF1F3D] hover:text-white">Close</button>
+                </form>
+            </div>
+        </div>
+  
+  `;
+};
+
 function displayCategories(categories) {
   //get the container
   const categoryContainer = document.getElementById("category-container");
@@ -80,6 +112,7 @@ const displayVideos = (videos) => {
           Oops!! Sorry, There is no content here
         </h2>
       </div>
+     
     `;
 
     return;
@@ -131,9 +164,18 @@ const displayVideos = (videos) => {
             </p>
             <p class="text-sm text-gray-400">${video.others.views} views</p>
           </div>
+          
+          </div>
 
-        </div>
+          <button id="my_modal_1" class="btn w-full" onclick=loadVideoDetails("${
+            video.video_id
+          }")>
+          
+          View Details
 
+          </button>
+
+          
       </div>
     
     `;
